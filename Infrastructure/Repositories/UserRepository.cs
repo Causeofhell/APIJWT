@@ -1,20 +1,16 @@
-﻿using Application.Contracts;
+﻿using Application.Common.Interfaces;
+using Application.Contracts;
 using Application.DTOs.User;
 using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace Infrastructure.Repositories
 {
-    internal class UserRepository(AppDbContext context, IConfiguration configuration) : IUser
+    internal class UserRepository(AppDbContext context, IJwtTokenGenerator jwtTokenGenerator) : IUser
     {
-        private readonly IConfiguration configuration = configuration;
         private readonly AppDbContext _dbContext = context;
+        private readonly IJwtTokenGenerator _jwtTokenGenerator = jwtTokenGenerator;
 
         public async Task<LoginResponse> LoginUserAsync(LoginDTO loginDTO)
         {
@@ -23,29 +19,9 @@ namespace Infrastructure.Repositories
 
             var checkPassword = BCrypt.Net.BCrypt.Verify(loginDTO.Password, getUser.Password);
             if (checkPassword)
-                return new LoginResponse(true, "Login successfully", GenerateJWTToken(getUser));
+                return new LoginResponse(true, "Login successfully", _jwtTokenGenerator.GenerateToken(getUser));
             else
                 return new LoginResponse(false, "Invalid credentials");
-        }
-
-        private string GenerateJWTToken(ApplicationUser user)
-        {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var userClaims = new[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Name!),
-                new Claim(ClaimTypes.Email, user.Email!)
-            };
-            var token = new JwtSecurityToken(
-                issuer: configuration["Jwt:Issuer"],
-                audience: configuration["Jwt:Audience"],
-                claims: userClaims,
-                expires: DateTime.UtcNow.AddDays(1),
-                signingCredentials: credentials);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         public async Task<RegistrationResponse> RegisterUserAsync(RegisterUserDTO registerUserDTO)
@@ -54,7 +30,7 @@ namespace Infrastructure.Repositories
             if (getUser is not null)
                 return new RegistrationResponse(false, "User alredy exist.");
 
-            _dbContext.Users.Add(new ApplicationUser()
+            _dbContext.Users.Add(new User()
             {
                 Name = registerUserDTO.Name,
                 Email = registerUserDTO.Email,
@@ -65,7 +41,7 @@ namespace Infrastructure.Repositories
             return new RegistrationResponse(true, "Registration complete.");
         }
 
-        private async Task<ApplicationUser> FindUserByEmail(string email) =>
+        private async Task<User> FindUserByEmail(string email) =>
             await this._dbContext.Users.FirstOrDefaultAsync(user => user.Email == email);
     }
 }

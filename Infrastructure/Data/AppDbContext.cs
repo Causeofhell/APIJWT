@@ -11,6 +11,6 @@ namespace Infrastructure.Data
         {
         }
 
-        public DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

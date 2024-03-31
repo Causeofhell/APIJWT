@@ -3,13 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{B1D6D79C-9D09-4CD7-89C5-77E94C3E7883}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{B1D6D79C-9D09-4CD7-89C5-77E94C3E7883}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{B5DC48C3-89E7-4675-AFF1-B842B84C1C3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{B5DC48C3-89E7-4675-AFF1-B842B84C1C3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{5A42B47C-E695-48FD-9D9E-60CF8D0C80DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{5A42B47C-E695-48FD-9D9E-60CF8D0C80DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{4CE89C03-F28B-4234-A8B4-964DFF4C7C2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{4CE89C03-F28B-4234-A8B4-964DFF4C7C2C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Requests", "Requests", "{4A4C2D6F-8DD9-4EE4-BBB3-5B7A778BC61B}"
+	ProjectSection(SolutionItems) = preProject
+		E:\Proyectos\HaileDinner-master\requests\auth\debug-tests.http = E:\Proyectos\HaileDinner-master\requests\auth\debug-tests.http
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

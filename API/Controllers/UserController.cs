@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("v1/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -18,6 +18,9 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<LoginResponse>> LogInUser(LoginDTO loginDTO)
         {
+           //Test middleware
+           // if (loginDTO is not null) throw new UnauthorizedAccessException("Invalid Token");
+
             var result = await user.LoginUserAsync(loginDTO);
             return Ok(result);
         }
