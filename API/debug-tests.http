@@ -1,0 +1,28 @@
+@hostname=localhost
+@port=7120
+@host={{hostname}}:{{port}}
+
+### Register request
+POST https://{{host}}/v1/User/register
+Content-Type: application/json
+
+{
+  "name": "Milthon",
+  "email": "milthonpsm@gmail.com",
+  "password": "123456",
+  "confirmPassword": "123456"
+}
+
+### Login request
+POST https://{{host}}/v1/User/login
+Content-Type: application/json
+
+{
+  "email":"milthonpsm@gmail.com",
+    "password":"123456"
+}
+
+### Weatherforecast request
+GET https://{{host}}/weatherforecast/
+Content-Type: application/json
+Authorization: Bearer <generated token here>
