@@ -1,7 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Application.Contracts;
 using Application.DTOs.User;
-using Domain.Entities;
+using Domain.Entities.Identity;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 

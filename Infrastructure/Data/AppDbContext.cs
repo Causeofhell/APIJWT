@@ -1,6 +1,4 @@
-﻿
-
-using Domain.Entities;
+﻿using Domain.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
