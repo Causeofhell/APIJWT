@@ -1,5 +1,6 @@
 ﻿using Domain.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 
 namespace Infrastructure.Data
 {
@@ -10,5 +11,7 @@ namespace Infrastructure.Data
         }
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<RoleEntity> Roles => Set<RoleEntity>();
     }
 }

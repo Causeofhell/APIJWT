@@ -7,5 +7,7 @@ namespace Application.Contracts
         Task<RegistrationResponse> RegisterUserAsync(RegisterUserDTO registerUserDTO);
 
         Task<LoginResponse> LoginUserAsync(LoginDTO loginDTO);
+
+        Task<ChangeUserRoleResponse> ChangeUserRole(ChangeRoleDTO changeRoleDTO);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Application.Contracts;
 using Application.DTOs.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,6 +30,14 @@ namespace API.Controllers
         public async Task<ActionResult<LoginResponse>> RegisterUser(RegisterUserDTO registerUserDTO)
         {
             var result = await user.RegisterUserAsync(registerUserDTO);
+            return Ok(result);
+        }
+
+        [HttpPost("changeRole")]
+        [Authorize]
+        public async Task<ActionResult<ChangeUserRoleResponse>> ChangeUserRole(ChangeRoleDTO changeRoleDTO)
+        {
+            var result = await user.ChangeUserRole(changeRoleDTO);
             return Ok(result);
         }
     }

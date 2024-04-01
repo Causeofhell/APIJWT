@@ -4,6 +4,8 @@ using Application.DTOs.User;
 using Domain.Entities.Identity;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Reflection;
 
 namespace Infrastructure.Repositories
 {
@@ -39,6 +41,21 @@ namespace Infrastructure.Repositories
 
             await _dbContext.SaveChangesAsync();
             return new RegistrationResponse(true, "Registration complete.");
+        }
+
+        public async Task<ChangeUserRoleResponse> ChangeUserRole(ChangeRoleDTO changeRoleDTO)
+        {
+            var getUser = await FindUserByEmail(changeRoleDTO.Email!);
+            if (getUser is null) return new ChangeUserRoleResponse(false, "Error, change role was not possible.");
+
+            var getRole = await _dbContext.Roles.FirstOrDefaultAsync(r => r.Id == getUser.RoleEntityId);
+            if (getRole is null) return new ChangeUserRoleResponse(false, "Error, change role was not possible.");
+
+            getRole.Role = changeRoleDTO.RoleName!;
+            _dbContext.Roles.Update(getRole);
+            await _dbContext.SaveChangesAsync();
+
+            return new ChangeUserRoleResponse(true, "Role changed succesfuly");
         }
 
         private async Task<User> FindUserByEmail(string email) =>
